@@ -502,9 +502,8 @@ class Ui_MainWindow(object):
         global text
         global value
         count+=1
-        if count==9:
-            self.display_result()
-            text=""
+        if text=="":
+            pass
         else:      
             if (value[0][0]==value[1][1]==value[2][2]==" X") or (value[0][2]==value[1][1]==value[2][0]==" X") or (value[0][0]==value[0][1]==value[0][2]==" X") or (value[1][0]==value[1][1]==value[1][2]==" X") or (value[2][0]==value[2][1]==value[2][2]==" X") or (value[0][0]==value[1][0]==value[2][0]==" X") or (value[0][1]==value[1][1]==value[2][1]==" X") or (value[0][2]==value[1][2]==value[2][2]==" X"):
                 self.display_result()
@@ -513,10 +512,14 @@ class Ui_MainWindow(object):
                 self.display_result()
                 text=""
             else:
-                if text==" X":
-                    text=" O"
+                if count==9:
+                    self.display.setText("DRAW")
+                    text=""
                 else:
-                    text=" X"
+                    if text==" X":
+                        text=" O"
+                    else:
+                        text=" X"
 
 
     def resett(self):
@@ -545,7 +548,6 @@ class Ui_MainWindow(object):
         self.lineEdit_2.setText(player1)
 
     def display_result(self):
-        global count
         font = QtGui.QFont()
         font.setFamily("Andalus")
         font.setPointSize(48)
@@ -553,22 +555,18 @@ class Ui_MainWindow(object):
         self.display.setFont(font)
         player1=self.lineEdit.text()
         player2=self.lineEdit_2.text()
-        if count==9:
-            self.display.setText("DRAW")
-        else:
-            if text==" X":
-                if player1!="":
-                    self.display.setText(f"Winner:\n{player1}")
-                else:
-                    self.display.setText("Winner:\nplayer1")
-            elif text==" O":
-                if player2!="":
-                    self.display.setText(f"Winner:\n{player2}")
-                else:
-                    self.display.setText("Winner:\nplayer2")
+
+        if text==" X":
+            if player1!="":
+                self.display.setText(f"Winner:\n{player1}")
             else:
-                count-=1
-                
+                self.display.setText("Winner:\nplayer1")
+        elif text==" O":
+            if player2!="":
+                self.display.setText(f"Winner:\n{player2}")
+            else:
+                self.display.setText("Winner:\nplayer2")
+            
 
 if __name__ == "__main__":
     import sys
